@@ -1,9 +1,11 @@
-Config { font = "xft:Mononoki:size=8:bold:antialias=true"
+Config { font = "xft:Ubuntu Mono Regualr:size=6:bold:antialias=true"
        , additionalFonts  = []
+       , borderColor      = "black"
+       , border           = TopB
        , bgColor          = "black"
        , fgColor          = "white"
-       , alpha            = 255
-       , position         = Static {xpos = 0, ypos = 0, width = 1310, height = 15}
+       , alpha            = 0
+       , position         = Top
        , textOffset       = -1
        , iconOffset       = -1
        , lowerOnStart     = True
@@ -24,9 +26,9 @@ Config { font = "xft:Mononoki:size=8:bold:antialias=true"
                       "-L", "-15", "-H", "-5",
                       "-l", "darkgrey", "-m", "white", "-h", "grey"] 300
                            , Run Com "/bin/bash" ["-c", "~/.xmonad/getvolume" ] "myvolume" 5 
-                    , Run Date "%_d %b %H:%M" "date" 50
+                    , Run Date "%_d %b %Y | %H:%M" "date" 50
                     , Run UnsafeStdinReader
                     ]
                     , sepChar = "%"
                     , alignSep = "}{"
-                    , template = " %UnsafeStdinReader%}{BAT:%battery% | <fc=#ee9a00>%date%</fc> "}
+                    , template = "   %UnsafeStdinReader%}{cpu:%cpu% | ram:%memory% | bat:%battery% | vol:%myvolume% | %wireless% | <fc=#ee9a00>%date%</fc>   "}

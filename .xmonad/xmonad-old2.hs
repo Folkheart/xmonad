@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Config.Desktop
 
 import XMonad.Actions.DwmPromote
 import XMonad.Actions.CycleWS
@@ -89,6 +90,7 @@ myManageHook = composeAll
                [ className =? "Gimp"          --> doFloat
                , className =? "Nemo"          --> doFloat
                , className =? "Nitrogen"      --> doCenterFloat
+               --, isFullscreen --> doFullFloat
                ]
 -------------
 -- LAYOUTS --
@@ -105,7 +107,7 @@ main = do
 
     xmproc <- spawnPipe "xmobar ~/.xmonad/.xmobarrc"  -- run xmobar with .xmobarrc
 
-    xmonad $ def
+    xmonad $ def-- ewmh desktopConfig
         { terminal           = myTerminal
         , modMask            = myModMask
         , borderWidth        = myBorderWidth
@@ -122,10 +124,13 @@ main = do
         , handleEventHook = handleEventHook def
                             <+> fullscreenEventHook
                             <+> docksEventHook
+                            -- <+> ewmhDesktopsEventHook
 
-        , logHook     = dynamicLogWithPP xmobarPP
-                                         { ppOutput     = hPutStrLn xmproc
-                                         , ppTitle      = xmobarColor "green" "" . shorten 50
-                                         }
+        , logHook     = --ewmhDesktopsLogHook
+                        dynamicLogWithPP xmobarPP
+                                             { ppOutput     = hPutStrLn xmproc
+                                             , ppTitle      = xmobarColor "green" "" . shorten 50
+                                             }
         }
+
         `additionalKeysP` myKeys
